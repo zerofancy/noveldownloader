@@ -66,7 +66,7 @@ public class App {
 		driver.get(url);
 		Integer triedTimes = 0;
 		WriteToFile(fileName, markdown);
-		System.out.println("请输入超时时间：");
+		System.out.println("请输入超时时间（秒）：");
 		driver.manage().timeouts().pageLoadTimeout(in.nextInt(), TimeUnit.SECONDS);
 		while (true) {
 			markdown="";
