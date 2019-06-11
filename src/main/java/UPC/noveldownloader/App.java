@@ -60,14 +60,15 @@ public class App {
 		String xpathNext = in.nextLine();
 		System.out.println("请输入文件名（包括路径）。");
 		String fileName = in.nextLine();
+		System.out.println("请输入超时时间（秒）：");
+		Integer timeout=in.nextInt();
 		WebDriver driver = new ChromeDriver();
 		String markdown = "% " + name + "\r\n\r\n";
 		markdown += "% " + author + "\r\n\r\n";
 		driver.get(url);
 		Integer triedTimes = 0;
 		WriteToFile(fileName, markdown);
-		System.out.println("请输入超时时间（秒）：");
-		driver.manage().timeouts().pageLoadTimeout(in.nextInt(), TimeUnit.SECONDS);
+		driver.manage().timeouts().pageLoadTimeout(timeout, TimeUnit.SECONDS);
 		while (true) {
 			markdown="";
 			if (triedTimes >= tryTimes) {
