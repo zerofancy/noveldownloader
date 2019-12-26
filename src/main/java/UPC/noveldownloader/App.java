@@ -1,12 +1,18 @@
 package UPC.noveldownloader;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.*;
-
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class App {
 	public static void WriteToFile(String file, String conent) {
@@ -41,6 +47,7 @@ public class App {
 	}
 
 	public static void main(String[] args) {
+		ChromeOptions options=new ChromeOptions();
 		Scanner in = new Scanner(System.in);
 		System.out.println("请输入书的标题。");
 		String name = in.nextLine();
@@ -62,13 +69,14 @@ public class App {
 		String fileName = in.nextLine();
 		System.out.println("请输入超时时间（秒）：");
 		Integer timeout=in.nextInt();
-		WebDriver driver = new ChromeDriver();
 		String markdown = "% " + name + "\r\n\r\n";
 		markdown += "% " + author + "\r\n\r\n";
+		WebDriver driver = new ChromeDriver(options);
 		driver.get(url);
 		Integer triedTimes = 0;
 		WriteToFile(fileName, markdown);
 		driver.manage().timeouts().pageLoadTimeout(timeout, TimeUnit.SECONDS);
+		String oldUrl="";
 		while (true) {
 			markdown="";
 			if (triedTimes >= tryTimes) {
@@ -102,12 +110,17 @@ public class App {
 				continue;
 			} else {
 				try {
-					eleNext.click();
+					((JavascriptExecutor)driver).executeScript("arguments[0].click()", eleNext);
 				}catch(Exception e) {
 					e.printStackTrace();
 					triedTimes++;
 					driver.navigate().refresh();
 					continue;
+				}
+				if(driver.getCurrentUrl().equals(oldUrl)){
+					break;
+				}else{
+					oldUrl=driver.getCurrentUrl();
 				}
 			}
 			triedTimes = 0;

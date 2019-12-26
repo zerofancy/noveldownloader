@@ -10,7 +10,7 @@
             "request": "launch",
             "mainClass": "${file}",
             "console": "integratedTerminal",
-            "encoding": "GBK"
+            "encoding": "UTF-8"
         },
         {
             "type": "java",
@@ -19,7 +19,7 @@
             "mainClass": "UPC.noveldownloader.App",
             "projectName": "noveldownloader",
             "console": "integratedTerminal",
-            "encoding": "GBK"
+            "encoding": "UTF-8"
         }
     ]
 }
