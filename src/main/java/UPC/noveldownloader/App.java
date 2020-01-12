@@ -48,6 +48,7 @@ public class App {
 
 	public static void main(String[] args) {
 		ChromeOptions options=new ChromeOptions();
+
 		Scanner in = new Scanner(System.in);
 		System.out.println("请输入书的标题。");
 		String name = in.nextLine();
@@ -72,6 +73,7 @@ public class App {
 		String markdown = "% " + name + "\r\n\r\n";
 		markdown += "% " + author + "\r\n\r\n";
 		WebDriver driver = new ChromeDriver(options);
+
 		driver.get(url);
 		Integer triedTimes = 0;
 		WriteToFile(fileName, markdown);
